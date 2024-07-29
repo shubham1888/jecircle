@@ -3,9 +3,13 @@ import "./globals.css";
 import { Inter as FontSans } from "next/font/google"
 import { cn } from "@/lib/utils"
 // const inter = Inter({ subsets: ["latin"] });
+import {
+  ClerkProvider
+} from '@clerk/nextjs'
 
 import { ThemeProvider } from "@/components/theme-provider"
 import Navbar from "@/components/Navbar";
+import { dark } from "@clerk/themes";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -23,8 +27,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark,
+      }}
+    >
+      <html lang="en">
+        <body>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -35,6 +44,7 @@ export default function RootLayout({
             {children}
           </ThemeProvider>
         </body>
-    </html>
+      </html>
+    </ClerkProvider>
   );
 }

@@ -1,6 +1,12 @@
 import Image from "next/image"
 import Link from "next/link"
 import { ModeToggle } from "./theme-toggler"
+import {
+    SignInButton,
+    SignedIn,
+    SignedOut,
+    UserButton
+} from '@clerk/nextjs'
 
 const Navbar = () => {
     return (
@@ -11,10 +17,17 @@ const Navbar = () => {
                 </Link>
             </div>
             <div className="flex justify-between items-center gap-6">
+                <Link href={"/"} className="hover:text-blue-400">Home</Link>
                 <Link href={"/about"} className="hover:text-blue-400">About</Link>
-                <Link href={"/sign-in"} className="hover:text-blue-400">Login</Link>
-                <Link href={"/sign-up"} className="hover:text-blue-400">Sign Up</Link>
                 <Link href={"/admin"} className="hover:text-blue-400">Admin</Link>
+                <SignedOut>
+                    <div className="hover:text-blue-400">
+                        <SignInButton />
+                    </div>
+                </SignedOut>
+                <SignedIn>
+                    <UserButton />
+                </SignedIn>
                 <div><ModeToggle /></div>
             </div>
         </nav>
