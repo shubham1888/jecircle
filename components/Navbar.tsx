@@ -7,6 +7,7 @@ import {
     SignedOut,
     UserButton
 } from '@clerk/nextjs'
+import { Button } from "./ui/button"
 
 const Navbar = () => {
     return (
@@ -21,9 +22,9 @@ const Navbar = () => {
                 <Link href={"/about"} className="hover:text-blue-400">About</Link>
                 <Link href={"/admin"} className="hover:text-blue-400">Admin</Link>
                 <SignedOut>
-                    <div className="hover:text-blue-400">
+                    <Button className="text-xl">
                         <SignInButton />
-                    </div>
+                    </Button>
                 </SignedOut>
                 <SignedIn>
                     <UserButton />
