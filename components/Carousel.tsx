@@ -51,14 +51,14 @@ const Carousel = ({ data, }: { data: { image: string }[] }) => {
                 <button
                     disabled={currentImg === 0}
                     onClick={() => setCurrentImg((prev) => prev - 1)}
-                    className={`border px-4 py-2 font-bold ${currentImg === 0 && 'opacity-50'}`}
+                    className={`border px-4 py-2 font-bold rounded-full mx-2 my-4 ${currentImg === 0 && 'opacity-50'}`}
                 >
                     {'<'}
                 </button>
                 <button
                     disabled={currentImg === data.length - 1}
                     onClick={() => setCurrentImg((prev) => prev + 1)}
-                    className={`border px-4 py-2 font-bold ${currentImg === data.length - 1 && 'opacity-50'}`}
+                    className={`border px-4 py-2 font-bold rounded-full mx-2 my-4 ${currentImg === data.length - 1 && 'opacity-50'}`}
                 >
                     {'>'}
                 </button>

@@ -20,6 +20,7 @@ const Navbar = () => {
             <div className="flex justify-between items-center gap-6">
                 <Link href={"/"} className="hover:text-blue-400">Home</Link>
                 <Link href={"/about"} className="hover:text-blue-400">About</Link>
+                <Link href={"/joinjec"} className="hover:text-blue-400">Join JEC</Link>
                 <Link href={"/admin"} className="hover:text-blue-400">Admin</Link>
                 <SignedOut>
                     <Button className="text-xl">
