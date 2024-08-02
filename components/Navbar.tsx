@@ -7,30 +7,34 @@ import {
     SignedOut,
     UserButton
 } from '@clerk/nextjs'
-import { Button } from "./ui/button"
+
+import { FaBars } from "react-icons/fa";
 
 const Navbar = () => {
     return (
-        <nav className="px-20 py-4 dark:text-white flex justify-between items-center text-2xl bg-black bg-opacity-5 dark:bg-opacity-20">
+        <nav className="px-8 md:px-20 py-4 dark:text-white flex justify-between items-center text-2xl bg-black bg-opacity-5 dark:bg-opacity-20">
             <div className="logo">
                 <Link href={"/"}>
                     <Image src={"/jec.png"} height={100} width={100} alt="Jec Logo" />
                 </Link>
             </div>
-            <div className="flex justify-between items-center gap-6">
+            <div className="md:flex justify-between items-center gap-6 hidden">
                 <Link href={"/"} className="hover:text-blue-400">Home</Link>
                 <Link href={"/about"} className="hover:text-blue-400">About</Link>
                 <Link href={"/joinjec"} className="hover:text-blue-400">Join JEC</Link>
                 <Link href={"/admin"} className="hover:text-blue-400">Admin</Link>
                 <SignedOut>
-                    <Button className="text-xl">
+                    <div className="hover:text-blue-400">
                         <SignInButton />
-                    </Button>
+                    </div>
                 </SignedOut>
                 <SignedIn>
                     <UserButton />
                 </SignedIn>
                 <div><ModeToggle /></div>
+            </div>
+            <div className="md:hidden">
+                <FaBars />
             </div>
         </nav>
     )

@@ -17,7 +17,9 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { toast } from "@/components/ui/use-toast"
+// import { toast } from "@/components/ui/use-toast"
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 const FormSchema = z.object({
     username: z.string().min(2, {
@@ -37,13 +39,19 @@ export default function InputForm() {
 
     function onSubmit(data: z.infer<typeof FormSchema>) {
         try {
-            addDoc(collection(db, "join_request"), {
+            addDoc(collection(db, "join_requests"), {
                 name: data.username,
                 email: data.email,
                 message: data.message,
-                id: Date().toLocaleString(),
+                date: Date().toLocaleString(),
             }).then((docRef) => {
-                toast({ title: "Your request has been sent successfully" });
+                // toast({ title: "Your request has been sent successfully" });
+                toast("Your request has been sent successfully. We will contact you soon.");
+                addDoc(collection(db, "notifications"), {
+                    message: `New join request have been created.`,
+                    date: Date().toLocaleString(),
+                    linkid: docRef.id
+                })
             })
         } catch (e) {
             console.error("Error adding document: ", e);
@@ -51,9 +59,10 @@ export default function InputForm() {
     }
 
     return (
-        <section className="w-[90vw] h-full flex justify-center items-center py-10">
+        <section className="h-full flex justify-center items-center py-10 mx-auto">
+            <ToastContainer />
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="sm:w-[90vw] md:w-[60vw] space-y-6">
                     <FormField
                         control={form.control}
                         name="username"

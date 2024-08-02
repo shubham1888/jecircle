@@ -11,7 +11,7 @@ import NewForm from "@/components/NewForm"
 
 export default function TabsDemo() {
   return (
-    <section className="w-[90vw] h-full flex justify-center items-center py-14">
+    <section className="w-[90vw] h-full flex justify-center items-center py-14 mx-auto">
       <Tabs defaultValue="account" className="w-[600px]">
         <TabsList className="grid w-full grid-cols-4 text-2xl my-2">
           <TabsTrigger value="home">Home</TabsTrigger>

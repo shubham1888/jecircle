@@ -1,5 +1,7 @@
+'use client'
 import { TabsContent } from './ui/tabs'
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
+import { useState, useEffect } from 'react'
 
 import {
     Accordion,
@@ -8,8 +10,28 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion"
 
+import { db } from '@/firebase'
+import { getDocs, collection } from 'firebase/firestore'
+
+async function getJoinRequestsFunction() {
+    const querySnapShot = await getDocs(collection(db, "join_requests"))
+    const arr = []
+    querySnapShot.forEach((doc) => {
+        arr.push({ id: doc.id, ...doc.data() })
+    })
+    return arr
+}
 
 const JoinRequestComponent = () => {
+    const [join_request_data, setJoin_request_data] = useState([]);
+    useEffect(() => {
+        async function fetchData() {
+            const data = await getJoinRequestsFunction()
+            setJoin_request_data(data)
+        }
+        fetchData()
+    }, [])
+
     return (
         <TabsContent value="joinrequest">
             <Card>
@@ -17,27 +39,20 @@ const JoinRequestComponent = () => {
                     <CardTitle>Join Request</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                    {/* <div className="space-y-1">
-
-                    </div>
-                    <div className="space-y-1">
-
-                    </div> */}
                     <Accordion type="single" collapsible>
-                        <AccordionItem value="item-1">
-                            <AccordionTrigger>Rahul</AccordionTrigger>
-                            <AccordionContent>
-                                <p className='text-lg font-semibold'>Email : email@gmail.com</p>
-                                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corporis repudiandae ut aliquam ea culpa, magni sit est libero repellat cumque, commodi animi? Quisquam eveniet sequi beatae fugit id est magni.</p>
-                            </AccordionContent>
-                        </AccordionItem>
-                        <AccordionItem value="item-2">
-                            <AccordionTrigger>Neha</AccordionTrigger>
-                            <AccordionContent>
-                                <p className='text-lg font-semibold'>Email : email@gmail.com</p>
-                                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corporis repudiandae ut aliquam ea culpa, magni sit est libero repellat cumque, commodi animi? Quisquam eveniet sequi beatae fugit id est magni.</p>
-                            </AccordionContent>
-                        </AccordionItem>
+                        {
+                            join_request_data.map((i) => {
+                                return (
+                                    <AccordionItem value={i.id} key={i.id}>
+                                        <AccordionTrigger>{i.name}</AccordionTrigger>
+                                        <AccordionContent>
+                                            <p className='text-lg font-semibold'>Email : {i.email}</p>
+                                            <p>{i.message}</p>
+                                        </AccordionContent>
+                                    </AccordionItem>
+                                )
+                            })
+                        }
                     </Accordion>
 
                 </CardContent>
