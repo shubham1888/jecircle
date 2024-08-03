@@ -51,7 +51,7 @@ const JoinRequestComponent = () => {
                         {
                             join_request_data.map((i) => {
                                 return (
-                                    <AccordionItem value:string={i.id} key:string={i.id}>
+                                    <AccordionItem value={String(i.id)} key={String(i.id)}>
                                         <AccordionTrigger>{i.name}</AccordionTrigger>
                                         <AccordionContent>
                                             <p className='text-lg font-semibold'>Email : {i.email}</p>
