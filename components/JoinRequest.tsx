@@ -13,17 +13,25 @@ import {
 import { db } from '@/firebase'
 import { getDocs, collection } from 'firebase/firestore'
 
-async function getJoinRequestsFunction() {
+interface JoinRequest {
+    id: String;
+    name?: String;
+    email?: String;
+    message?: String;
+    date?: String;
+}
+
+async function getJoinRequestsFunction():Promise<JoinRequest[]> {
     const querySnapShot = await getDocs(collection(db, "join_requests"))
-    const arr = []
+    const arr: JoinRequest[] = []
     querySnapShot.forEach((doc) => {
-        arr.push({ id: doc.id, ...doc.data() })
+        arr.push({ id: doc.id, ...doc.data() } as JoinRequest)
     })
     return arr
 }
 
 const JoinRequestComponent = () => {
-    const [join_request_data, setJoin_request_data] = useState([]);
+    const [join_request_data, setJoin_request_data] = useState<JoinRequest[]>([]);
     useEffect(() => {
         async function fetchData() {
             const data = await getJoinRequestsFunction()
